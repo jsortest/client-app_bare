@@ -1,0 +1,13 @@
+[Unit]
+Description=Sorcerer Client
+
+[Service]
+Type=forking
+WorkingDirectory=/sorcerer/publish/
+ExecStart=/usr/bin/dotnet --additional-deps /sorcerer/publish/ --additionalprobingpath /sorcerer/publish/ /sorcerer/publish/SorcererClient.dll sorcerer.jabil.com
+;Restart=on-failure
+;RestartSec=5
+Type=simple
+
+[Install]
+WantedBy=multi-user.target 

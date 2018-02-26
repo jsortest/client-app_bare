@@ -1,0 +1,38 @@
+#!/bin/sh
+
+### BEGIN INIT INFO
+# Provides:        sorcerer
+# Required-Start:  $remote_fs $syslog
+# Required-Stop:   $remote_fs $syslog
+# Default-Start:   2 3 4 5
+# Default-Stop:    0 1 6
+# Short-Description: Start sorcerer daemon
+### END INIT INFO
+
+start() {
+(cd /sorcerer/publish/ && exec /usr/bin/dotnet /sorcerer/publish/SorcererClient.dll sorcerer.jabil.com)
+}
+
+stop() {
+kill  $(ps aux | grep 'SorcererClient.dll' | awk '{print $2}')
+}
+
+case "$1" in
+  start)
+    start
+    ;;
+  stop)
+    stop
+    ;;
+  uninstall)
+    uninstall
+    ;;
+  retart)
+    stop
+    start
+    ;;
+  *)
+    echo "Usage: $0 {start|stop|restart|uninstall}"
+esac
+
+
